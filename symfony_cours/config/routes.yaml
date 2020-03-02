@@ -1,0 +1,15 @@
+route_consultation:
+  path: /consultation/
+  controller: App\Controller\ConsultationController::index
+route_medecin:
+  path: /medecin/
+  controller: App\Controller\MedecinController::index
+route_patient:
+  path: /patient/
+  controller: App\Controller\ConsultationController::index
+route_medicament:
+  path: /medicament/
+  controller: App\Controller\MedicamentController::index
+index:
+   path: /
+   controller: App\Controller\DefaultController::index

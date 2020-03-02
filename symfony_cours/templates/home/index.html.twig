@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+    <h1>Accueil</h1>
+
+    <ul>
+        <li><a href="{{ path('route_consultation') }}">Consultations</a></li>
+        <li><a href="{{ path('route_medecin') }}">Médecins</a></li>
+        <li><a href="{{ path('route_patient') }}">Patients</a></li>
+        <li><a href="{{ path('route_medicament') }}">Médicaments</a></li>
+    </ul>
+
+{% endblock %}

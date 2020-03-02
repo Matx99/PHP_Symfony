@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
  * @Route("/patient")
  */
@@ -31,47 +30,20 @@ class PatientController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        // $patient = new Patient();
-        // $form = $this->createForm(PatientType::class, $patient);
-        // $form->handleRequest($request);
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $entityManager = $this->getDoctrine()->getManager();
-        //     $entityManager->persist($patient);
-        //     $entityManager->flush();
-
-        //     return $this->redirectToRoute('patient_index');
-        // }
-
-        // return $this->render('patient/new.html.twig', [
-        //     'patient' => $patient,
-        //     'form' => $form->createView(),
-        // ]);
-        // nouvelle instance de la Classe Patient
         $patient = new Patient();
-
-        $form = $this->createFormBuilder($patient)
-            ->add('prenom', TextType::class)
-            ->add('nom', TextType::class)
-            ->add('NumSS', IntegerType::class)
-            ->add('dateNaissance', DateType::class)
-            ->add('save', SubmitType::class, ['label' => 'Création Patient'])
-            ->getForm();
-
+        $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // recueil des données saisies pour hydrater l'objet patient
-            $patient = $form->getData();
-            // persister l'objet en BdD
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($patient);
             $entityManager->flush();
 
-            return $this->redirectToRoute('patient_list');
+            return $this->redirectToRoute('patient_index');
         }
 
         return $this->render('patient/new.html.twig', [
+            'patient' => $patient,
             'form' => $form->createView(),
         ]);
     }

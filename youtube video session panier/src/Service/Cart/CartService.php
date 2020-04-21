@@ -28,7 +28,7 @@ class CartService {
         $this->session->set('panier', $panier);
     }
 
-    public function remove (int $id) {
+    public function remove(int $id) {
         $panier = $this->session->get('panier', []);
 
         if(!empty($panier[$id])){
@@ -44,9 +44,20 @@ class CartService {
         $panierWithData = [];
 
         foreach($panier as $id => $quantity){
+
+            if(isset($_GET['quantity'.$id.'']) && !empty($_GET['quantity'.$id.''])){
+
+                $quantity = $_GET['quantity'.$id.''];
+                $panier[$id] = $quantity;
+                $this->session->set('panier', $panier);
+
+            }
+
             $panierWithData[] = [
+
                 'product' => $this->productRepository->find($id),
                 'quantity' => $quantity
+
             ];
         }
 

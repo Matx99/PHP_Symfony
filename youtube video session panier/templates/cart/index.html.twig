@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CartController!
+{% block title %}Panier
 {% endblock %}
 
 {% block body %}
@@ -9,39 +9,61 @@
     </div>
 
     {% if items | length > 0 %}
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Produit</th>
-                    <th>Prix unitaire</th>
-                    <th>Quantité</th>
-                    <th>Prix total</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in items %}
+        <form action="" method="get">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ item.product.title }}</td>
-                        <td>{{ item.product.price }} </td>
-                        <td>{{ item.quantity }}</td>
-                        <td>{{ item.product.price * item.quantity }}</td>
-                        <td>
-                            <a href="{{ path('cart_remove', {'id' : item.product.id}) }}" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
+                        <th>Produit</th>
+                        <th>Prix unitaire</th>
+                        <th>Quantité</th>
+                        <th>Frais de livraison</th>
+                        <th>Prix total</th>
+                        <th></th>
                     </tr>
-                {% endfor %}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="text-right">Total :</td>
-                    <td>{{ total }}</td>
-                    <td></td>
-                </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                        <tr>
+                            <td>{{ item.product.title }}</td>
+                            <td>{{ item.product.price }} </td>
+                            <td>
+                                <input type="number" value="{{ item.quantity }}" name="quantity{{item.product.id}}">
+                            </td>
+                            <td>
+                                {% if total < 1000 %}
+                                    50 (offerts au dessus de 1000 €)
+                                {% else %}
+                                    Offerts
+                                {% endif %}
+                            </td>
+                            <td>{{ item.product.price * item.quantity }} €</td>
+                            <td>
+                                <a href="{{ path('cart_remove', {'id' : item.product.id}) }}" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="text-right">Total :</td>
+                        <td>{{ total }} €</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <hr>
+            <a href="#" class="btn btn-success float-right">
+                <i class="fas fa-shopping-cart mr-1"></i>
+                Commander
+            </a>
+            <button type="submit" class="btn btn-success float-right">
+                <i class="fas fa-shopping-cart mr-1"></i>
+                Enregistrer les modifications
+            </button>
+        </form>
+
     {% else %}
         <p>Votre panier est vide.</p>
     {% endif %}
